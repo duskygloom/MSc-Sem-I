@@ -3,12 +3,12 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"hashtable/chaining"
+	"hashtable/doubleHashing"
 	"hashtable/hashing"
+	"hashtable/linearProbing"
+	"hashtable/quadraticProbing"
 	"hashtable/table"
-	"hashtable/tableCH"
-	"hashtable/tableDH"
-	"hashtable/tableLP"
-	"hashtable/tableQP"
 	"os"
 	"strconv"
 	"strings"
@@ -81,9 +81,9 @@ func main() {
 	htChoice := chooseCollisionResolutionTechnique()
 	switch htChoice {
 	case 1:
-		ht = tableLP.New(size, hf)
+		ht = linearProbing.NewTable(size, hf)
 	case 2:
-		ht = tableQP.New(size, hf)
+		ht = quadraticProbing.NewTable(size, hf)
 	case 3:
 		var hf2 hashing.HashFunction
 		hf2Choice := chooseHashFunction()
@@ -100,9 +100,9 @@ func main() {
 			fmt.Println("Invalid choice of hash function.")
 			return
 		}
-		ht = tableDH.New(size, hf, hf2)
+		ht = doubleHashing.NewTable(size, hf, hf2)
 	case 4:
-		ht = tableCH.New(size, hf)
+		ht = chaining.NewTable(size, hf)
 	default:
 		fmt.Println("Invalid choice of collision resolution technique.")
 		return

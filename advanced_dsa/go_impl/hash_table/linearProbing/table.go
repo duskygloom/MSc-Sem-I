@@ -1,6 +1,4 @@
-package tableLP
-
-// table linear probing
+package linearProbing
 
 import (
 	"hashtable/hashing"
@@ -13,7 +11,7 @@ type Table struct {
 	hf     hashing.HashFunction
 }
 
-func New(size int, hf hashing.HashFunction) *Table {
+func NewTable(size int, hf hashing.HashFunction) *Table {
 	if size < 0 {
 		size = 0
 	}
@@ -87,7 +85,7 @@ func (ht *Table) Contains(key int) bool {
 }
 
 func (ht *Table) Rehash() {
-	newTable := New(ht.size*2, ht.hf)
+	newTable := NewTable(ht.size*2, ht.hf)
 	for _, v := range ht.buffer {
 		if v != nil {
 			newTable.Insert(v.Key())

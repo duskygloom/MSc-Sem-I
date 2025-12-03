@@ -1,6 +1,4 @@
-package tableCH
-
-// table chaining
+package quadraticProbing
 
 import (
 	"hashtable/hashing"
@@ -9,15 +7,15 @@ import (
 
 type Table struct {
 	size   int
-	buffer []*Node
+	buffer []*item.Item
 	hf     hashing.HashFunction
 }
 
-func New(size int, hf hashing.HashFunction) *Table {
+func NewTable(size int, hf hashing.HashFunction) *Table {
 	if size < 0 {
 		size = 0
 	}
-	return &Table{size: size, buffer: make([]*Node, size), hf: hf}
+	return &Table{size: size, buffer: make([]*item.Item, size), hf: hf}
 }
 
 func (ht *Table) String() string {
@@ -54,56 +52,43 @@ func (ht *Table) NilString() string {
 
 func (ht *Table) Insert(key int) bool {
 	hash := ht.hf(key, ht.size)
-	if ht.buffer[hash] == nil {
-		ht.buffer[hash] = NewNode(item.New(key))
-		return true
-	} else {
-		return ht.buffer[hash].Append(item.New(key))
+	for i := 0; i < ht.size; i++ {
+		index := (hash + i*i) % ht.size
+		if ht.buffer[index] == nil {
+			ht.buffer[index] = item.New(key)
+			return true
+		}
 	}
+	return false
 }
 
 func (ht *Table) Delete(key int) {
 	hash := ht.hf(key, ht.size)
-	if ht.buffer[hash] != nil {
-		node := ht.buffer[hash]
-		if node.value.Key() == key {
-			// root has to be removed
-			ht.buffer[hash] = ht.buffer[hash].next
-			return
-		}
-		for node != nil {
-			if node.value.Key() == key {
-				node.Remove()
-				break
-			}
-			node = node.next
+	for i := 0; i < ht.size; i++ {
+		index := (hash + i*i) % ht.size
+		if ht.buffer[index] != nil && ht.buffer[index].Key() == key {
+			ht.buffer[index] = nil
+			break
 		}
 	}
 }
 
 func (ht *Table) Contains(key int) bool {
 	hash := ht.hf(key, ht.size)
-	if ht.buffer[hash] != nil {
-		node := ht.buffer[hash]
-		for node != nil {
-			if node.value.Key() == key {
-				return true
-			}
-			node = node.next
+	for i := 0; i < ht.size; i++ {
+		index := (hash + i*i) % ht.size
+		if ht.buffer[index] != nil && ht.buffer[index].Key() == key {
+			return true
 		}
 	}
 	return false
 }
 
 func (ht *Table) Rehash() {
-	newTable := New(ht.size*2, ht.hf)
-	for _, n := range ht.buffer {
-		if n != nil {
-			node := n
-			for node != nil {
-				newTable.Insert(node.value.Key())
-				node = node.next
-			}
+	newTable := NewTable(ht.size*2, ht.hf)
+	for _, v := range ht.buffer {
+		if v != nil {
+			newTable.Insert(v.Key())
 		}
 	}
 	ht.size *= 2
@@ -111,5 +96,5 @@ func (ht *Table) Rehash() {
 }
 
 func (ht *Table) NthItem(n int) *item.Item {
-	return ht.buffer[n].value
+	return ht.buffer[n]
 }

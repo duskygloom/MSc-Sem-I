@@ -1,4 +1,4 @@
-package tableCH
+package chaining
 
 import (
 	"hashtable/item"

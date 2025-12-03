@@ -1,6 +1,4 @@
-package tableDH
-
-// table double hashing
+package doubleHashing
 
 import (
 	"hashtable/hashing"
@@ -14,7 +12,7 @@ type Table struct {
 	hf2    hashing.HashFunction
 }
 
-func New(size int, hf hashing.HashFunction, hf2 hashing.HashFunction) *Table {
+func NewTable(size int, hf hashing.HashFunction, hf2 hashing.HashFunction) *Table {
 	if size < 0 {
 		size = 0
 	}
@@ -91,7 +89,7 @@ func (ht *Table) Contains(key int) bool {
 }
 
 func (ht *Table) Rehash() {
-	newTable := New(ht.size*2, ht.hf, ht.hf2)
+	newTable := NewTable(ht.size*2, ht.hf, ht.hf2)
 	for _, v := range ht.buffer {
 		if v != nil {
 			newTable.Insert(v.Key())
