@@ -114,9 +114,9 @@ def plot(
 
 
 def main():
-    # j = int(input("Number of decision variables: "))
-    j = 2
-    print(f"Number of decision variables: {j}")
+    j = int(input("Number of decision variables: "))
+    # j = 2
+    # print(f"Number of decision variables: {j}")
     print()
 
     print("Objective function")
@@ -136,7 +136,7 @@ def main():
         t = [int(x) for x in input(f"Enter constraint {x+1}: ").split()]
         assert len(t) == j + 1
         temp.append(t)
-    temp_array = np.array(temp)
+    temp_array = np.array(temp, dtype=float)
     aij = temp_array[:, :j]
     bi = temp_array[:, j:]
     print()

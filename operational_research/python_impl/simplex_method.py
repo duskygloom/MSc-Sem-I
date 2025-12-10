@@ -1,4 +1,5 @@
 from math import inf
+from typing import Tuple
 import numpy as np
 from tabulate import tabulate
 
@@ -124,9 +125,18 @@ class Tableau:
         return tabulate(self.table, headers=headers, tablefmt="simple_outline")
 
 
-def solve(i: int, j: int, cj: np.ndarray, aij: np.ndarray, bi: np.ndarray):
+def solve(
+    i: int,
+    j: int,
+    cj: np.ndarray,
+    aij: np.ndarray,
+    bi: np.ndarray,
+    *,
+    print_tables: bool = False,
+) -> np.ndarray:
     ti = Tableau(i, j, cj, aij, bi)
-    print(ti)
+    if print_tables:
+        print(ti)
     status = "ok"
     while not ti.is_optimal():
         try:
@@ -135,10 +145,10 @@ def solve(i: int, j: int, cj: np.ndarray, aij: np.ndarray, bi: np.ndarray):
         except Exception as e:
             status = e.args[0]
     if status == "ok":
-        for index, value in enumerate(ti.xb):
-            print(f"x{value+1} = {ti.bi[index, 0]}")
+        sorted_bi = ti.bi[np.argsort(ti.xb)].flatten()
+        return sorted_bi
     else:
-        print(status)
+        return np.ndarray([])
 
 
 def main():
@@ -169,7 +179,10 @@ def main():
     bi = temp_array[:, j:]
     print()
 
-    solve(i, j, cj, aij, bi)
+    solutions = solve(i, j, cj, aij, bi, print_tables=True)
+    for index, value in enumerate(solutions):
+        print(f"x{index+1} = {value}")
+    print(f"Optimum value: {np.linalg.matmul(cj, solutions)}")
 
 
 if __name__ == "__main__":
