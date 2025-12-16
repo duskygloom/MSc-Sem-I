@@ -1,0 +1,9 @@
+Number of decision variables: 2
+
+Objective function
+Enter 2 coefficients: 3 5
+
+Number of constraints: 2
+Constraints
+Enter constraint 1: 2 3 12
+Enter constraint 2: 1 1 5

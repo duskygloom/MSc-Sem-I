@@ -51,9 +51,9 @@ def solve(
 
 
 def main():
-    j = int(input("Number of decision variables: "))
-    # j = 2
-    # print(f"Number of decision variables: {j}")
+    # j = int(input("Number of decision variables: "))
+    j = 2
+    print(f"Number of decision variables: {j}")
     print()
 
     print("Objective function")

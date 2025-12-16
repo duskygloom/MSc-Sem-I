@@ -1,9 +1,8 @@
 from math import inf
-from typing import Tuple
 import numpy as np
 from tabulate import tabulate
 
-np.seterr(divide="ignore")
+np.seterr(divide="ignore", invalid="ignore")
 
 
 class Tableau:
@@ -21,23 +20,33 @@ class Tableau:
         self.j = j
         self.bi = bi
         # create extended cj
-        self.cj = np.zeros(i + j, dtype=float)
+        self.cj = np.zeros(2 * i + j, dtype=float)
         for x in range(j):
             self.cj[x] = cj[x]
         # create extended aij
-        self.aij = np.zeros((i, i + j), dtype=float)
+        self.aij = np.zeros((i, 2 * i + j), dtype=float)
         for x in range(i):
             for y in range(j):
                 self.aij[x, y] = aij[x, y]
         for x in range(i):
-            self.aij[x, j + x] = 1
+            self.aij[x, x + j] = -1
+            self.aij[x, x + i + j] = 1
         # basic variables
-        self.xb = [i + x for x in range(j)]
+        self.xb = [i + j + x for x in range(i)]
 
     def next(self) -> None:
         crit_value = self.critical_value
         incoming = self.incoming
         outgoing = self.outgoing
+        # eliminate outgoing if it is artificial
+        outgoing_var = self.xb[outgoing]
+        if outgoing_var > self.j + self.i:
+            self.aij = np.hstack(
+                (self.aij[:, :outgoing_var], self.aij[:, outgoing_var + 1 :])
+            )
+            self.cj = np.hstack((self.cj[:outgoing_var], self.cj[outgoing_var + 1 :]))
+
+        # matrix transformations
         self.xb[outgoing] = incoming
         self.aij[outgoing] /= crit_value
         self.bi[outgoing, 0] /= crit_value
@@ -49,12 +58,12 @@ class Tableau:
             self.bi[x, 0] -= factor * self.bi[outgoing, 0]
 
     @property
-    def cb(self) -> list:
-        return [self.cj[x] for x in self.xb]
+    def cb(self) -> np.ndarray:
+        return np.array([self.cj[x] for x in self.xb])
 
     @property
     def zj(self) -> np.ndarray:
-        return np.linalg.matmul(np.array(self.cb), self.aij)
+        return np.linalg.matmul(self.cb, self.aij)
 
     @property
     def incoming(self) -> int:
@@ -104,11 +113,12 @@ class Tableau:
         ti = []
         flat_bi = self.bi.flatten()
         for x in range(self.i):
-            row: list[str | int] = [0 for _ in range(4 + self.i + self.j)]
+            row: list[str | int] = [0 for _ in range(4 + len(self.cj))]
+            print(x)
             row[0] = self.cb[x]
             row[1] = f"x{self.xb[x]+1}"
             row[2] = flat_bi[x]
-            for y in range(self.i + self.j):
+            for y in range(len(self.cj)):
                 row[y + 3] = self.aij[x, y]
             row[-1] = self.ratio[x]
             ti.append(row)
@@ -120,8 +130,30 @@ class Tableau:
         ti.append(zj_row)
         return ti
 
+    @property
+    def result(self) -> np.ndarray:
+        result = [0 for _ in range(2 * self.i + self.j)]
+        for index, value in enumerate(self.xb):
+            result[value] = self.bi[index, 0]
+        return np.array(result, dtype=float)
+
+    @property
+    def optimum_value(self) -> float:
+        value = np.linalg.matmul(self.cj, self.result)
+        if isinstance(value, float):
+            return value
+        return value.flatten()[0]
+
     def __str__(self) -> str:
-        headers = ["cb", "xb", "b", *[f"x{x+1}" for x in range(self.i + self.j)], "r"]
+        headers = [
+            "cb",
+            "xb",
+            "b",
+            *[f"x{x+1}" for x in range(len(self.cj))],
+            "r",
+        ]
+        print(headers)
+        print(np.array(self.table))
         return tabulate(self.table, headers=headers, tablefmt="simple_outline")
 
 
@@ -133,22 +165,18 @@ def solve(
     bi: np.ndarray,
     *,
     print_tables: bool = False,
-) -> np.ndarray:
+) -> Tableau | None:
     ti = Tableau(i, j, cj, aij, bi)
     if print_tables:
         print(ti)
-    status = "ok"
     while not ti.is_optimal():
-        try:
-            ti.next()
-            print(ti)
-        except Exception as e:
-            status = e.args[0]
-    if status == "ok":
-        sorted_bi = ti.bi[np.argsort(ti.xb)].flatten()
-        return sorted_bi
-    else:
-        return np.ndarray([])
+        # try:
+        ti.next()
+        print(ti)
+    # except Exception as e:
+    #     print(e)
+    #     return None
+    return ti
 
 
 def main():
@@ -179,10 +207,13 @@ def main():
     bi = temp_array[:, j:]
     print()
 
-    solutions = solve(i, j, cj, aij, bi, print_tables=True)
-    for index, value in enumerate(solutions):
-        print(f"x{index+1} = {value}")
-    print(f"Optimum value: {np.linalg.matmul(cj, solutions)}")
+    ti = solve(i, j, cj, aij, bi, print_tables=True)
+    if ti == None:
+        print("No valid solutions.")
+        return
+    for index in range(j):
+        print(f"x{index+1} = {ti.result[index]}")
+    print(f"Optimum value: {ti.optimum_value}")
 
 
 if __name__ == "__main__":
