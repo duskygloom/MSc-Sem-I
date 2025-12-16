@@ -5,15 +5,15 @@ import (
 )
 
 type Node struct {
-	parent       *Node
-	children     []*Node
-	order, value int
+	Parent       *Node
+	Children     []*Node
+	Order, Value int
 }
 
 func NewNode(order int, parent *Node) *Node {
-	n := Node{order: order, parent: parent}
+	n := Node{Order: order, Parent: parent}
 	for i := range order {
-		n.children = append(n.children, NewNode(i, &n))
+		n.Children = append(n.Children, NewNode(i, &n))
 	}
 	return &n
 }
@@ -22,9 +22,9 @@ func (n *Node) String() string {
 	if n == nil {
 		return "nil"
 	}
-	s := fmt.Sprintf("%d -> [", n.value)
+	s := fmt.Sprintf("%d -> [", n.Value)
 	prefix := ""
-	for _, child := range n.children {
+	for _, child := range n.Children {
 		s += prefix + child.String()
 		prefix = ", "
 	}
@@ -35,10 +35,25 @@ func (n *Node) String() string {
 // Note: [child] becomes a child of [self]. Both should be of the same [order].
 // Return: Returns true if merged successfully, else false.
 func (n *Node) Merge(child *Node) bool {
-	if n.order != child.order {
+	if n == nil || child == nil || n.Order != child.Order {
 		return false
 	}
-	n.children = append(n.children, child)
-	n.order++
+	n.Children = append(n.Children, child)
+	n.Order++
+	return true
+}
+
+func (n *Node) Update(value int) bool {
+	ni := n
+	if ni == nil {
+		return false
+	}
+	ni.Value = value
+	for ni != nil && ni.Parent != nil {
+		if ni.Value < ni.Parent.Value {
+			ni.Value, ni.Parent.Value = ni.Parent.Value, ni.Value
+		}
+		ni = ni.Parent
+	}
 	return true
 }
