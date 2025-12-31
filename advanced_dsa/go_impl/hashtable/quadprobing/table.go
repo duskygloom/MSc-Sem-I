@@ -1,6 +1,7 @@
 package quadprobing
 
 import (
+	"fmt"
 	"hashtable/hashing"
 	"hashtable/item"
 )
@@ -57,6 +58,8 @@ func (ht *Table) Insert(key int) bool {
 		if ht.buffer[index] == nil {
 			ht.buffer[index] = item.New(key)
 			return true
+		} else {
+			fmt.Printf("Collision at %d: %d -> %d\n", index, key, ht.buffer[index].Key())
 		}
 	}
 	return false

@@ -45,6 +45,7 @@ func main() {
 				}
 				h.Insert(int(num))
 			}
+			fmt.Println(h.String())
 		case 2:
 			if h.IsEmpty() {
 				fmt.Println("Heap is empty.")
@@ -54,6 +55,7 @@ func main() {
 			}
 		case 3:
 			h.DeleteMin()
+			fmt.Println(h.String())
 		case 4:
 			fmt.Print("Enter elements: ")
 			scanner := bufio.NewScanner(os.Stdin)
@@ -69,6 +71,7 @@ func main() {
 				}
 				h.Delete(int(num))
 			}
+			fmt.Println(h.String())
 		case 5:
 			fmt.Println(h.String())
 		default:

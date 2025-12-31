@@ -1,0 +1,18 @@
+package main
+
+import (
+	"binarytrie/trie"
+	"fmt"
+)
+
+func main() {
+	bt := trie.NewBinTrie(4)
+	// bt.Insert(12)
+	bt.Insert(10)
+	bt.Insert(11)
+	fmt.Println(bt.String())
+	bt.Compress()
+	fmt.Println(bt.String())
+	bt.Uncompress()
+	fmt.Println(bt.String())
+}

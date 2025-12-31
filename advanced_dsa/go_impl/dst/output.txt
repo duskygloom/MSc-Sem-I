@@ -1,0 +1,38 @@
+$ go run .
+Number of bits: 4
+4-Bit Digital Search Tree
+
+1. Insert
+2. Delete
+3. Lookup
+4. Print
+0. Quit
+Choose an operation: 1
+Enter elements: 12 10 11 13 14 6
+12 (1100) -> [6 (0110), 10 (1010) -> [11 (1011), 13 (1101) -> [nil, 14 (1110)]]]
+
+1. Insert
+2. Delete
+3. Lookup
+4. Print
+0. Quit
+Choose an operation: 2
+Enter elements: 5 6
+12 (1100) -> [nil, 10 (1010) -> [11 (1011), 13 (1101) -> [nil, 14 (1110)]]]
+
+1. Insert
+2. Delete
+3. Lookup
+4. Print
+0. Quit
+Choose an operation: 3
+Enter elements: 14 15
+Found: 14
+12 (1100) -> [nil, 10 (1010) -> [11 (1011), 13 (1101) -> [nil, 14 (1110)]]]
+
+1. Insert
+2. Delete
+3. Lookup
+4. Print
+0. Quit
+Choose an operation: 0

@@ -1,0 +1,48 @@
+$ go run .
+1. Insert
+2. Minimum
+3. Delete minimum
+4. Delete
+5. Print
+0. Quit
+Choose operation: 1
+Enter elements: 54 23 56 78 45
+23 -> [54, 56 -> [78]]
+45
+
+1. Insert
+2. Minimum
+3. Delete minimum
+4. Delete
+5. Print
+0. Quit
+Choose operation: 2
+Minimum element: 23
+
+1. Insert
+2. Minimum
+3. Delete minimum
+4. Delete
+5. Print
+0. Quit
+Choose operation: 3
+45 -> [54, 56 -> [78]]
+
+1. Insert
+2. Minimum
+3. Delete minimum
+4. Delete
+5. Print
+0. Quit
+Choose operation: 4
+Enter elements: 56
+54
+45 -> [78]
+
+1. Insert
+2. Minimum
+3. Delete minimum
+4. Delete
+5. Print
+0. Quit
+Choose operation: 0

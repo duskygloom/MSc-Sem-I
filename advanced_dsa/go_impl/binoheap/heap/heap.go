@@ -71,6 +71,9 @@ func (h *Heap) Insert(value int) {
 }
 
 func (h *Heap) minRoot() int {
+	if h == nil {
+		return -1
+	}
 	minValue := math.MaxInt
 	minIndex := -1
 	for index, r := range h.roots {
@@ -91,6 +94,9 @@ func (h *Heap) Minimum() int {
 }
 
 func (h *Heap) DeleteMin() bool {
+	if h == nil {
+		return false
+	}
 	minIndex := h.minRoot()
 	minNode := h.roots[minIndex]
 	h.roots = append(h.roots[:minIndex], h.roots[minIndex+1:]...)
@@ -101,6 +107,9 @@ func (h *Heap) DeleteMin() bool {
 }
 
 func searchAtNode(n *node.Node, value int) *node.Node {
+	if n == nil {
+		return nil
+	}
 	if value == n.Value {
 		return n
 	} else if value > n.Value {
@@ -115,6 +124,9 @@ func searchAtNode(n *node.Node, value int) *node.Node {
 }
 
 func (h *Heap) find(value int) *node.Node {
+	if h == nil {
+		return nil
+	}
 	for _, r := range h.roots {
 		n := searchAtNode(r, value)
 		if n != nil {

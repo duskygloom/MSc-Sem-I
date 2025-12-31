@@ -1,0 +1,71 @@
+$ go run .
+1. Division method
+2. Multiplication method
+3. Folding method
+4. Mid-square method
+Choose hash function: 4
+
+Size of hash table: 7
+
+1. Linear probing
+2. Quadratic probing
+3. Double hashing
+4. Chaining
+Choose collision resolution technique: 4
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 1
+Enter elements: 70 10 8 69 52 7 50
+[70 -> 10 -> 8 -> 7 -> 50, 69, nil, nil, 52, nil, nil]
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 2
+Enter elements: 10 20
+[70 -> 8 -> 7 -> 50, 69, nil, nil, 52, nil, nil]
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 3
+Enter elements: 40 50
+Found: 50
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 4
+[70 -> 50, 69, nil, nil, 52, nil, nil, 7, 8, nil, nil, nil, nil, nil]
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 1
+Enter elements: 70 10 8 69 52 7 50
+[70 -> 50 -> 70 -> 10 -> 50, 69 -> 69, nil, nil, 52 -> 52, nil, nil, 7 -> 7, 8 -> 8, nil, nil, nil, nil, nil]
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 0

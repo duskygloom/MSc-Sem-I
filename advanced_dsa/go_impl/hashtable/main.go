@@ -42,7 +42,6 @@ func chooseOperation() int {
 	fmt.Println("3. Search")
 	fmt.Println("4. Rehash")
 	fmt.Println("5. Print")
-	fmt.Println("6. Print (include nil)")
 	fmt.Println("0. Quit")
 	fmt.Print("Choose operation: ")
 	var option int
@@ -85,17 +84,18 @@ func main() {
 	case 2:
 		ht = quadprobing.NewTable(size, hf)
 	case 3:
+		fmt.Println()
 		var hf2 hashing.HashFunction
 		hf2Choice := chooseHashFunction()
 		switch hf2Choice {
 		case 1:
-			hf = hashing.DivisionMethod
+			hf2 = hashing.DivisionMethod
 		case 2:
-			hf = hashing.MultiplicationMethod
+			hf2 = hashing.MultiplicationMethod
 		case 3:
-			hf = hashing.FoldingMethod
+			hf2 = hashing.FoldingMethod
 		case 4:
-			hf = hashing.MidSquareMethod
+			hf2 = hashing.MidSquareMethod
 		default:
 			fmt.Println("Invalid choice of hash function.")
 			return
@@ -128,8 +128,12 @@ func main() {
 					fmt.Printf("%s is not an integer.\n", s)
 					return
 				}
-				ht.Insert(int(num))
+				ok := ht.Insert(int(num))
+				if !ok {
+					fmt.Printf("Failed to insert %d.\n", num)
+				}
 			}
+			fmt.Println(ht.NilString())
 		case 2:
 			fmt.Print("Enter elements: ")
 			scanner := bufio.NewScanner(os.Stdin)
@@ -145,6 +149,7 @@ func main() {
 				}
 				ht.Delete(int(num))
 			}
+			fmt.Println(ht.NilString())
 		case 3:
 			fmt.Print("Enter elements: ")
 			scanner := bufio.NewScanner(os.Stdin)
@@ -168,12 +173,9 @@ func main() {
 			fmt.Println()
 		case 4:
 			ht.Rehash()
+			fmt.Println(ht.NilString())
 		case 5:
 			fmt.Println(ht.String())
-		case 6:
-			fmt.Println(ht.NilString())
-		default:
-			fmt.Println("Invalid option.")
 		}
 	}
 }

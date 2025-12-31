@@ -1,0 +1,88 @@
+$ go run .
+1. Division method
+2. Multiplication method
+3. Folding method
+4. Mid-square method
+Choose hash function: 2
+
+Size of hash table: 7
+
+1. Linear probing
+2. Quadratic probing
+3. Double hashing
+4. Chaining
+Choose collision resolution technique: 2
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 1
+Enter elements: 70 10 8 69 52 7 50
+Collision at 1: 10 -> 70
+Collision at 2: 7 -> 10
+Collision at 6: 50 -> 8
+Collision at 0: 50 -> 52
+Collision at 3: 50 -> 7
+Collision at 1: 50 -> 70
+Collision at 1: 50 -> 70
+Collision at 3: 50 -> 7
+Collision at 0: 50 -> 52
+Failed to insert 50.
+[52, 70, 10, 7, 69, nil, 8]
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 2
+Enter elements: 69 70 71
+[52, nil, 10, 7, nil, nil, 8]
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 3
+Enter elements: 10 20
+Found: 10
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 4
+[nil, 52, 10, nil, 7, nil, nil, nil, nil, nil, nil, nil, nil, 8]
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 1
+Enter elements: 70 10 8 69 52 7 50
+Collision at 2: 10 -> 10
+Collision at 3: 10 -> 70
+Collision at 13: 8 -> 8
+Collision at 1: 52 -> 52
+Collision at 2: 52 -> 10
+Collision at 4: 7 -> 7
+Collision at 5: 7 -> 52
+[8, 52, 10, 70, 7, 52, 10, nil, 7, 69, nil, nil, 50, 8]
+
+1. Insert
+2. Delete
+3. Search
+4. Rehash
+5. Print
+0. Quit
+Choose operation: 0

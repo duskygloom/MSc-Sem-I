@@ -1,0 +1,31 @@
+$ go run .
+1. Create
+2. Lookup
+3. Print
+0. Quit
+Choose an operation: 1
+Enter word: aggregate
+* -> [a* -> [aggregate, ate], e -> [egate], g* -> [gate, ggregate, gregate], regate, te]
+
+1. Create
+2. Lookup
+3. Print
+0. Quit
+Choose an operation: 2
+Enter suffix: gate ager
+Found: gate
+* -> [a* -> [aggregate, ate], e -> [egate], g* -> [gate, ggregate, gregate], regate, te]
+
+1. Create
+2. Lookup
+3. Print
+0. Quit
+Choose an operation: 1
+Enter word: elephant
+* -> [ant, e* -> [elephant, ephant], hant, lephant, nt, phant, t]
+
+1. Create
+2. Lookup
+3. Print
+0. Quit
+Choose an operation: 0

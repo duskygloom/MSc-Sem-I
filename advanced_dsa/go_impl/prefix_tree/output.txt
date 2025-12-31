@@ -1,0 +1,35 @@
+$ go run .
+1. Insert
+2. Delete
+3. Lookup
+4. Print
+0. Quit
+Choose an operation: 1
+Enter elements: and ape ant an happy halloween holiday
+* -> [a* -> [an -> [and, ant], ape], h* -> [ha* -> [halloween, happy], holiday]]
+
+1. Insert
+2. Delete
+3. Lookup
+4. Print
+0. Quit
+Choose an operation: 2
+Enter elements: an apple happy sad  
+* -> [a* -> [an* -> [and, ant], ape], h* -> [ha* -> [halloween], holiday]]
+
+1. Insert
+2. Delete
+3. Lookup
+4. Print
+0. Quit
+Choose an operation: 3
+Enter elements: an and holiday
+Found: and, holiday
+* -> [a* -> [an* -> [and, ant], ape], h* -> [ha* -> [halloween], holiday]]
+
+1. Insert
+2. Delete
+3. Lookup
+4. Print
+0. Quit
+Choose an operation: 0

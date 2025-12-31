@@ -2,6 +2,7 @@ package node
 
 import (
 	"fmt"
+	"strconv"
 )
 
 type Node struct {
@@ -21,15 +22,26 @@ func NewNode(order int, parent *Node) *Node {
 func (n *Node) String() string {
 	if n == nil {
 		return "nil"
+	} else if n.IsLeafNode() {
+		return strconv.Itoa(n.Value)
+	} else {
+		s := fmt.Sprintf("%d -> [", n.Value)
+		prefix := ""
+		for _, child := range n.Children {
+			s += prefix + child.String()
+			prefix = ", "
+		}
+		s += "]"
+		return s
 	}
-	s := fmt.Sprintf("%d -> [", n.Value)
-	prefix := ""
-	for _, child := range n.Children {
-		s += prefix + child.String()
-		prefix = ", "
-	}
-	s += "]"
-	return s
+}
+
+func (n *Node) IsLeafNode() bool {
+	return n != nil && len(n.Children) == 0
+}
+
+func (n *Node) IsParentNode() bool {
+	return n != nil && n.Parent == nil
 }
 
 // Note: [child] becomes a child of [self]. Both should be of the same [order].
